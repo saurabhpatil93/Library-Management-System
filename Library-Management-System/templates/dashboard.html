@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Smart Library Dashboard</title>
+
+    <link rel="stylesheet"
+          href="/static/style.css">
+
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <div class="navbar">
+
+        <h2>📚 Smart Library Management Systems</h2>
+
+        <a href="/logout">
+
+            Logout
+
+        </a>
+
+    </div>
+
+    <!-- MAIN CONTAINER -->
+
+    <div class="main-container">
+
+        <!-- DASHBOARD HEADING -->
+
+        <h1 class="dashboard-heading">
+
+            Welcome To Smart Library System
+
+        </h1>
+
+        <!-- DASHBOARD CARDS -->
+
+        <div class="cards">
+
+            <div class="card">
+
+                <h3>📚 Added Books</h3>
+
+                <p>{{ books|length }}</p>
+
+            </div>
+
+            <div class="card">
+
+                <h3>👨‍🎓 Members</h3>
+
+                <p>{{ members|length }}</p>
+
+            </div>
+
+            <div class="card">
+
+                <h3>📖 Issued Books</h3>
+
+                <p>{{ issued_books|length }}</p>
+
+            </div>
+
+            <div class="card">
+
+                <h3>📕 Returned Books</h3>
+
+                <p>{{ returned_books|length }}</p>
+
+            </div>
+
+            <div class="card">
+
+                <h3>💰 Fine Records</h3>
+
+                <p>{{ fines|length }}</p>
+
+            </div>
+
+        </div>
+
+        <!-- ACTION BUTTONS -->
+
+        <div class="buttons">
+
+            <a href="/add_book">
+
+                ➕ Add Book
+
+            </a>
+
+            <a href="/issue_book">
+
+                📖 Issue Book
+
+            </a>
+
+            <a href="/return_book">
+
+                📕 Return Book
+
+            </a>
+
+        </div>
+
+        <!-- SEARCH BAR -->
+
+        <div class="search-box">
+
+            <form action="/dashboard"
+                  method="GET">
+
+                <input type="text"
+                       placeholder="Search Book...">
+
+                <button type="submit">
+
+                    Search
+
+                </button>
+
+            </form>
+
+        </div>
+
+        <!-- BOOK DATABASE -->
+
+        <div class="table-section">
+
+            <h2 class="table-title">
+
+                📚 Book Database
+
+            </h2>
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <tr>
+
+                        <th>ID</th>
+
+                        <th>Title</th>
+
+                        <th>Genre</th>
+
+                        <th>Copies</th>
+
+                        <th>Author</th>
+
+                        <th>Action</th>
+
+                    </tr>
+
+                    {% for book in books %}
+
+                    <tr>
+
+                        <td>{{ book.id }}</td>
+
+                        <td>{{ book.title }}</td>
+
+                        <td>{{ book.genre }}</td>
+
+                        <td>{{ book.copies }}</td>
+
+                        <td>{{ book.author.name }}</td>
+
+                        <td>
+
+                            <a class="delete-btn"
+                               href="/delete/{{ book.id }}">
+
+                                Delete
+
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </table>
+
+            </div>
+
+        </div>
+
+        <!-- MEMBER DATABASE -->
+
+        <div class="table-section">
+
+            <h2 class="table-title">
+
+                👨‍🎓 Member Records
+
+            </h2>
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <tr>
+
+                        <th>ID</th>
+
+                        <th>Name</th>
+
+                        <th>Email</th>
+
+                    </tr>
+
+                    {% for member in members %}
+
+                    <tr class="member-row">
+
+                        <td>{{ member.id }}</td>
+
+                        <td>{{ member.name }}</td>
+
+                        <td>{{ member.email }}</td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </table>
+
+            </div>
+
+        </div>
+
+        <!-- ISSUED BOOKS -->
+
+        <div class="table-section">
+
+            <h2 class="table-title">
+
+                📖 Issued Books
+
+            </h2>
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <tr>
+
+                        <th>ID</th>
+
+                        <th>Member</th>
+
+                        <th>Book</th>
+
+                        <th>Issue Date</th>
+
+                        <th>Due Date</th>
+
+                        <th>Status</th>
+
+                    </tr>
+
+                    {% for issue in issued_books %}
+
+                    <tr class="issue-row">
+
+                        <td>{{ issue.id }}</td>
+
+                        <td>{{ issue.member_name }}</td>
+
+                        <td>{{ issue.book_title }}</td>
+
+                        <td>{{ issue.issue_date }}</td>
+
+                        <td>{{ issue.due_date }}</td>
+
+                        <td>
+
+                            <span class="status-issued">
+
+                                {{ issue.status }}
+
+                            </span>
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </table>
+
+            </div>
+
+        </div>
+
+        <!-- RETURNED BOOKS -->
+
+        <div class="table-section">
+
+            <h2 class="table-title">
+
+                📕 Returned Books
+
+            </h2>
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <tr>
+
+                        <th>ID</th>
+
+                        <th>Return Date</th>
+
+                        <th>Condition</th>
+
+                        <th>Issue ID</th>
+
+                    </tr>
+
+                    {% for return_book in returned_books %}
+
+                    <tr class="return-row">
+
+                        <td>{{ return_book.id }}</td>
+
+                        <td>{{ return_book.return_date }}</td>
+
+                        <td>{{ return_book.condition }}</td>
+
+                        <td>{{ return_book.issue_id }}</td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </table>
+
+            </div>
+
+        </div>
+
+        <!-- FINE RECORDS -->
+
+        <div class="table-section">
+
+            <h2 class="table-title">
+
+                💰 Fine Records
+
+            </h2>
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <tr>
+
+                        <th>Fine ID</th>
+
+                        <th>Issue ID</th>
+
+                        <th>Amount</th>
+
+                        <th>Status</th>
+
+                    </tr>
+
+                    {% for fine in fines %}
+
+                    <tr class="fine-row">
+
+                        <td>{{ fine.id }}</td>
+
+                        <td>{{ fine.issue_id }}</td>
+
+                        <td>₹ {{ fine.amount }}</td>
+
+                        <td>
+
+                            {% if fine.paid_status %}
+
+                            <span class="status-paid">
+
+                                Paid
+
+                            </span>
+
+                            {% else %}
+
+                            <span class="status-unpaid">
+
+                                Unpaid
+
+                            </span>
+
+                            {% endif %}
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </table>
+
+            </div>
+
+        </div>
+
+        <!-- FOOTER -->
+
+        <div class="footer">
+
+            <p>
+
+                Smart Library Management System © 2026
+
+            </p>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

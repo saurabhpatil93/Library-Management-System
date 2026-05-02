@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Add Book</title>
+
+    <link rel="stylesheet"
+          href="/static/style.css">
+
+</head>
+
+<body>
+
+    <div class="navbar">
+
+        <h2>📚 Add New Book</h2>
+
+        <a href="/dashboard">
+            Dashboard
+        </a>
+
+    </div>
+
+    <div class="form-container">
+
+        <h1>Add Book</h1>
+
+        <form method="POST">
+
+            <input type="text"
+                   name="title"
+                   placeholder="Book Title"
+                   required>
+
+            <input type="text"
+                   name="genre"
+                   placeholder="Genre"
+                   required>
+
+            <input type="text"
+                   name="author"
+                   placeholder="Author Name"
+                   required>
+
+            <input type="number"
+                   name="copies"
+                   placeholder="Number of Copies"
+                   required>
+
+            <button type="submit">
+
+                Add Book
+
+            </button>
+
+        </form>
+
+    </div>
+
+</body>
+
+</html>
